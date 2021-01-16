@@ -20,6 +20,7 @@ import type {DraftScrollPosition} from 'DraftScrollPosition';
 const DefaultDraftBlockRenderMap = require('DefaultDraftBlockRenderMap');
 const DefaultDraftInlineStyle = require('DefaultDraftInlineStyle');
 const DraftEditorCompositionHandler = require('DraftEditorCompositionHandler');
+const DraftEditorIOSCompositionHandler = require('DraftEditorIOSCompositionHandler')
 const DraftEditorContents = require('DraftEditorContents.react');
 const DraftEditorDragHandler = require('DraftEditorDragHandler');
 const DraftEditorEditHandler = require('DraftEditorEditHandler');
@@ -41,17 +42,20 @@ const invariant = require('invariant');
 const isHTMLElement = require('isHTMLElement');
 const nullthrows = require('nullthrows');
 
+var isAndroid = UserAgent.isPlatform('Android >= 7')
+
 const isIE = UserAgent.isBrowser('IE');
 
 // IE does not support the `input` event on contentEditable, so we can't
 // observe spellcheck behavior.
 const allowSpellCheck = !isIE;
 
+
 // Define a set of handler objects to correspond to each possible `mode`
 // of editor behavior.
 const handlerMap = {
   edit: DraftEditorEditHandler,
-  composite: DraftEditorCompositionHandler,
+  composite: isAndroid ? DraftEditorCompositionHandler : DraftEditorIOSCompositionHandler,
   drag: DraftEditorDragHandler,
   cut: null,
   render: null,

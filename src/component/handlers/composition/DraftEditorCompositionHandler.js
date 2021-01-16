@@ -220,9 +220,9 @@ const DraftEditorCompositionHandler = {
       );
       // We need to update the editorState so the leaf node ranges are properly
       // updated and multiple mutations are correctly applied.
-      editorState = EditorState.set(editorState, {
-        currentContent: contentState,
-      });
+      // editorState = EditorState.set(editorState, {
+      //   currentContent: contentState,
+      // });
     });
 
     // When we apply the text changes to the ContentState, the selection always
